@@ -5,10 +5,10 @@ let txtArea = document.getElementById('txtArea')
 
 let makeDict = wordList => {
   let dict = wordList.reduce((dict, word) => {
-    // convert to lowercase to index properly?
-    //let w = word.toLowerCase();
-    // discard short words
+    // ditch short words
     if (!word || word.length < 3) { return dict; }
+
+    word = word.toLowerCase()
 
     if (!dict[word]) {
       dict[word] = {
@@ -29,18 +29,19 @@ let makeDict = wordList => {
     }
   }
   return arr.sort((w1,w2) => {
-    return w2.count - w1.count; // reverse sort so we can use appendChild as needed
-  });
+    // reverse sort so we can use a straight appendChild later on
+    return w2.count - w1.count;
+  })
 }
 
 let countChars = () => {
   // see: http://www.mediacollege.com/internet/javascript/text/count-words.html
   let val = txtArea
               .value
-              .replace(/(^\s*)|(\s*$)/gi,'') //exclude start and end white-space
-              .replace(/[ ]{2,}/gi,' ') //2 or more space to 1
+              .replace(/(^\s*)|(\s*$)/gi,'') // exclude start and end white-space
+              .replace(/\n/gi,' ') // convert newline to space
+              .replace(/[ ]{2,}/gi,' ') // 2 or more space to 1
               .replace(/[.,!?/]{1,}/gi,' ') // remove special chars
-              .replace(/\n /,' '); // convert newline to space
 
   let wordList = val.split(' ');
 
@@ -54,14 +55,14 @@ let countChars = () => {
     let li = document.createElement('li')
     li.appendChild(document.createTextNode(word.val + ' ' + word.count))
     frag.appendChild(li);
-  });
+  })
 
   wordListUL.innerHTML = '';
   wordListUL.appendChild(frag);
 
-};
+}
 
 ['paste', 'change', 'keyup'].forEach(function (evt) {
   txtArea.addEventListener(evt, countChars);
-});
+})
 
