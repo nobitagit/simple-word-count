@@ -1,14 +1,15 @@
 {
-  "name": "es6-init",
+  "name": "simple-word-count",
   "version": "1.0.0",
-  "description": "",
+  "description": "paste your text, count the words",
   "main": "src/index.js",
   "scripts": {
     "postinstall": "mkdir dist; npm run build",
     "clean": "rm -rf dist",
     "build": "browserify src/index.js -o dist/bundle.js",
     "build:w": "watchify src/index.js -o dist/bundle.js",
-    "build:html": "html-dist src/index.html --remove-all --insert bundle.js -o dist/index.html"
+    "build:html": "html-dist src/index.html --remove-all --insert bundle.js -o dist/index.html",
+    "deploy": "gh-pages -d dist"
   },
   "keywords": [],
   "author": "Nobita",
@@ -18,6 +19,7 @@
     "babel-preset-es2015": "^6.3.13",
     "babelify": "^7.2.0",
     "browserify": "^12.0.1",
+    "gh-pages": "^0.10.0",
     "html-dist": "^0.1.0",
     "watchify": "^3.6.1"
   },
