@@ -1,42 +1,136 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Word count</title>
-	<style type="text/css">
-		body{
-			color: #005363;
-			font-family: monospace;
-		}
-		textarea{
-			border: 1px solid #267584;
-			border-radius: 3px;
-		  width: 100%;
-		  max-width: 700px;
-		  min-height: 250px;
-		}
-		.main-footer{
-			margin-top: 100px;
-		}
-	</style>
+  <title>Word count</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <style type="text/css">
+    body{
+      color: #005363;
+/*      font-family: monospace;
+*/    }
+    .navbar-default {
+      background-color: #163165;
+      border: none;
+      border-radius: 0;
+    }
+    .navbar-default .navbar-brand,
+    .navbar-default .navbar-brand:hover,
+    .navbar-default .navbar-nav>li>a,
+    .navbar-default .navbar-nav>li>a:hover {
+      color: rgba(255,255,255,.8);
+    }
+    .mb{ /* lazy => uuuugly class */
+      margin-bottom: 20px;
+    }
+    textarea{
+      min-height: 250px;
+    }
+    .main-footer{
+      margin-top: 100px;
+    }
+    .instructions{
+      padding-top: 10px;
+    }
+
+
+
+    /* Sticky footer styles
+    -------------------------------------------------- */
+
+    html,
+    body {
+      height: 100%;
+      /* The html and body elements cannot have any padding or margin. */
+    }
+    .sf_wrap {
+      min-height: 100%;
+      height: auto !important;
+      height: 100%;
+      margin: 0 auto -50px;
+    }
+    .main-footer {
+      height: 50px;
+    }
+    .main-footer {
+      background-color: #f5f5f5;
+    }
+    @media (max-width: 767px) {
+      .main-footer {
+        margin-left: -20px;
+        margin-right: -20px;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
-<h1>Word count</h1>
-<textarea id="txtArea"></textarea>
+<div class="sf_wrap">
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <span class="navbar-brand" href="#">
+          Word Count
+        </span>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a href="https://github.com/nobitagit/simple-word-count" class="ion-social-github"></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <main class="container">
+    <nav class="row mb">
+      <div class="col-md-6">
+        <p class="instructions">
+          Paste or write your text here below.
+        </p>
+      </div>
+      <div class="col-md-6">
+        <div class="pull-right">
+          <button type="button" class="btn btn-danger" id="deleteBtn"><span class="ion-trash-a"></span> Delete</button>
+        </div>
+      </div>
+    </nav>
 
-<footer>
-	<span>Characters: </span><b id="cCounter"></b> <br />
-	<span>Words: </span><b id="wCounter"></b>
-</footer>
+    <textarea id="txtArea" class="form-control"></textarea>
 
-<aside>
-	<h3>Word rank</h3>
-	<ul id="wordList"></ul>
-</aside>
+    <section class="row">
+      <article class="col-md-6">
+        <h3><span class="ion-calculator"></span> Word count</h3>
+        <p>
+          <span>Characters: </span><b id="cCounter" class="badge">0</b> <br />
+          <span>Words: </span><b id="wCounter" class="badge">0</b>
+        </p>
+
+        <!--div class="progress">
+          NOT YET IMPLEMENTED :)
+          <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+            60%
+          </div>
+        </div-->
+      </article>
+      <article class="col-md-6">
+        <aside>
+          <h3><span class="ion-stats-bars"></span> Word rank</h3>
+          <p>
+            <small>NB - Only words over 2 letters are ranked.</small>
+          </p>
+          <ul id="wordList" class="list-group"></ul>
+        </aside>
+      </article>
+    </section>
+  </main>
+</div>
 
 <footer class="main-footer">
-	<small>
-		code at: <a href="https://github.com/nobitagit/simple-word-count">https://github.com/nobitagit/simple-word-count</a>
-	</small>
+  <p class="instructions container text-center">
+    <small>
+      <a href="https://github.com/nobitagit/simple-word-count">VIEW SOURCE</a>
+    </small>
+  </p>
 </footer>
 </body>
 </html>

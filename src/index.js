@@ -1,43 +1,16 @@
+import makeDict from "./js/dict.js"
+import lStorage from "./js/localStorage.js"
+
 let txtArea = document.getElementById('txtArea')
   , cCounter = document.getElementById('cCounter')
   , wCounter = document.getElementById('wCounter')
   , wordListUL = document.getElementById('wordList')
 
-let makeDict = wordList => {
-  let dict = wordList.reduce((dict, word) => {
-    // ditch short words
-    if (!word || word.length < 3) { return dict; }
-
-    word = word.toLowerCase()
-
-    if (!dict[word]) {
-      dict[word] = {
-        val: word,
-        count: 1
-      }
-    } else {
-      dict[word].count = dict[word].count + 1
-    }
-    return dict;
-  }, {});
-
-  let arr = [];
-  for (let word in dict) {
-    // discard words used only once
-    if ( dict[word].count > 1) {
-      arr.push(dict[word]);
-    }
-  }
-  return arr.sort((w1,w2) => {
-    // reverse sort so we can use a straight appendChild later on
-    return w2.count - w1.count;
-  })
-}
-
 let countChars = () => {
+  let txt = txtArea.value
+  lStorage.set(txt);
   // see: http://www.mediacollege.com/internet/javascript/text/count-words.html
-  let val = txtArea
-              .value
+  let val = txt
               .replace(/(^\s*)|(\s*$)/gi,'') // exclude start and end white-space
               .replace(/\n/gi,' ') // convert newline to space
               .replace(/[ ]{2,}/gi,' ') // 2 or more space to 1
@@ -53,8 +26,13 @@ let countChars = () => {
 
   dict.forEach(word => {
     let li = document.createElement('li')
-    li.appendChild(document.createTextNode(word.val + ' ' + word.count))
-    frag.appendChild(li);
+    let span = document.createElement('span')
+    li.className = 'list-group-item';
+    span.className = 'badge'
+    span.appendChild(document.createTextNode(word.count))
+    li.appendChild(document.createTextNode(word.val))
+    li.appendChild(span)
+    frag.appendChild(li)
   })
 
   wordListUL.innerHTML = '';
@@ -62,7 +40,18 @@ let countChars = () => {
 
 }
 
+if ( lStorage.get() ) {
+  txtArea.value = lStorage.get()
+  countChars()
+}
+
 ['paste', 'change', 'keyup'].forEach(function (evt) {
   txtArea.addEventListener(evt, countChars);
 })
 
+let deleteBtn = document.getElementById('deleteBtn')
+deleteBtn.addEventListener('click', () => {
+  txtArea.value = lStorage.set('')
+  txtArea.focus()
+  countChars()
+})
